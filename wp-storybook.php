@@ -2,8 +2,10 @@
 /*
 Plugin Name: WP Storybook
 Description: Dynamically generate an index of all template parts in your WordPress theme and view them individually like Storybook.js, with a "Code" button to view the template code.
-Version: 1.3
-Author: Your Name
+Version: 1.4
+Author: Bernucci Eronne
+GitHub Plugin URI: https://github.com/floyd0987/wp-storybook
+GitHub Branch: main
 */
 
 // Hook into WordPress to create a custom rewrite rule for single template part pages.
