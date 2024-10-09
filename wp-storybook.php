@@ -119,3 +119,33 @@ function wp_storybook_display_index() {
 
     return $output;
 }
+
+
+// Hook to enqueue theme CSS files
+add_action('wp_enqueue_scripts', 'wp_storybook_enqueue_theme_css');
+
+function wp_storybook_enqueue_theme_css() {
+    // Get the current active theme's directory path
+    $theme_directory = get_template_directory() . '/assets/build/css/';
+    
+    // Check if the directory exists
+    if (is_dir($theme_directory)) {
+        // Open the directory and read its contents
+        if ($handle = opendir($theme_directory)) {
+            while (false !== ($file = readdir($handle))) {
+                // Only enqueue .css files
+                if (pathinfo($file, PATHINFO_EXTENSION) === 'css') {
+                    // Generate the file's URL
+                    $file_url = get_template_directory_uri() . '/assets/build/css/' . $file;
+
+                    // Use the file name without the extension as the handle
+                    $handle_name = pathinfo($file, PATHINFO_FILENAME) . '-style';
+
+                    // Enqueue the stylesheet
+                    wp_enqueue_style($handle_name, $file_url, array(), filemtime($theme_directory . $file));
+                }
+            }
+            closedir($handle);
+        }
+    }
+}
